@@ -1,34 +1,23 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Home from './Home.jsx'
+import Game from './Game.jsx'
+// import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [showPage, setShowPage] = useState("home")
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className='d-flex flex-column vh-100 p-2 bg-danger-subtle'>
+      <main className='flex-fill m-2'>
+        {showPage == 'home' && <Home setShowPage={setShowPage} />}
+        {showPage == 'game' && <Game setShowPage={setShowPage} />}
+      </main>
+
+      <footer className='text-center p-2 m-2'>
+          Designed and created by YcWong @2024
+      </footer>
+
+    </div>
   )
 }
 

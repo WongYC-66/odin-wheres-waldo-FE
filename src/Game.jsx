@@ -21,8 +21,30 @@ function Game({ setShowPage }) {
     mousePageX: 0,
     mousePageY: 0,
   })
-  const [foundCircles, setFoundCircles] = useState([])
 
+  const [foundCircles, setFoundCircles] = useState([])
+  const [time, setTime] = useState(0)
+  const [timer, setTimer] = useState([])
+
+  useEffect(() => {
+    // set up 0.1s timer
+    let myInterval = setInterval(() => {
+      setTime(prev => prev + 0.1)
+    }, 100)  // 100ms
+    setTimer(prev => [...prev, myInterval])
+  }, [])
+
+  useEffect(() => {
+    // monitor if game ends
+    if (characters.length === 0) {
+      console.log('Game Ended, timer paused.')
+      while(timer.length){
+        clearInterval(timer.pop())
+      }
+      setTimer([])
+    }
+
+  }, [characters])
 
   const mouseClick = (e) => {
     let img = document.querySelector("#gameImg")
@@ -52,6 +74,10 @@ function Game({ setShowPage }) {
         <img src={characters.includes(2) ? chr02Img : chr99Img} className='m-2 border border-black' />
         <img src={characters.includes(3) ? chr03Img : chr99Img} className='m-2 border border-black' />
         <img src={characters.includes(4) ? chr04Img : chr99Img} className='m-2 border border-black' />
+        {/* timer */}
+        <span>{Math.floor(time / 60).toString().padStart(2, '0')}</span>
+        <span>:</span>
+        <span>{(time % 60).toFixed(0).padStart(2, '0')}</span>
       </div>
 
       {/* game image */}
@@ -88,7 +114,7 @@ function Game({ setShowPage }) {
 
         // purpsely set key to dynamic, so when zoom-in / out, find again, then it will scale back.
         return (
-          <div key={val+xCircle} className='position-absolute border border-danger border-5 p-1 rounded-circle'
+          <div key={val + xCircle} className='position-absolute border border-danger border-5 p-1 rounded-circle'
             style={{ width: "5rem", height: "5rem", left: xCircle, top: yCircle }}>
 
           </div>

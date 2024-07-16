@@ -7,6 +7,7 @@ import chr01Img from '/chr01.png?url'
 import chr02Img from '/chr02.png?url'
 import chr03Img from '/chr03.png?url'
 import chr04Img from '/chr04.png?url'
+import chr99Img from '/chr99.png?url'
 
 function Game({ setShowPage }) {
 
@@ -47,10 +48,10 @@ function Game({ setShowPage }) {
       {/* fixed top bar */}
       <div className='fixed-top d-flex bg-secondary justify-content-center align-items-center' style={{ maxHeight: "103px" }} >
         <h2 className='text-light m-2'>Find me</h2>
-        <img src={chr01Img} className='m-2 border border-black' />
-        <img src={chr02Img} className='m-2 border border-black' />
-        <img src={chr03Img} className='m-2 border border-black' />
-        <img src={chr04Img} className='m-2 border border-black' />
+        <img src={characters.includes(1) ? chr01Img : chr99Img} className='m-2 border border-black' />
+        <img src={characters.includes(2) ? chr02Img : chr99Img} className='m-2 border border-black' />
+        <img src={characters.includes(3) ? chr03Img : chr99Img} className='m-2 border border-black' />
+        <img src={characters.includes(4) ? chr04Img : chr99Img} className='m-2 border border-black' />
       </div>
 
       {/* game image */}

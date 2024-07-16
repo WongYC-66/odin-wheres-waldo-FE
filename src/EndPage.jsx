@@ -1,60 +1,84 @@
-// import chr01Img from '/chr01.png?url'
-// import chr02Img from '/chr02.png?url'
-// import chr03Img from '/chr03.png?url'
-// import chr04Img from '/chr04.png?url'
+import { useEffect, useState } from "react"
 
-function Selection(props) {
+function EndPage(props) {
 
-  let { mouseX, mouseY, imgWidth, imgHeight, mousePageX, mousePageY} = props.selectionProp
+  let time = props.time
+  let setShowPage = props.setShowPage
 
-  let characters = props.characters
-  let setCharacters = props.setCharacters
-  let setShowSelection = props.setShowSelection
-  let setFoundCircles = props.setFoundCircles
+  const [modalVisible, setModalVisible] = useState(false);
+  let modalInstance = null;
 
-  // console.log(props.selectionProp)
+  const showModal = () => {
+    setModalVisible(true);
+    // Initialize modal instance
+    modalInstance = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+    modalInstance.show();
+  };
 
-  const submit = (e, val) => {
-    // call BackEnd to check
-    let xCoord = mouseX / imgWidth
-    let yCoord = mouseY / imgHeight
-
-    let solution = {
-      1: [0.488, 0.713],
-      2: [0.853, 0.670],
-      3: [0.274, 0.600],
-      4: [0.135, 0.677],
+  const hideModal = () => {
+    setModalVisible(false);
+    if (modalInstance) {
+      modalInstance.hide();
+      // Clean up: Remove modal-open class from body and backdrop
+      setTimeout(() => {
+        document.body.classList.remove('modal-open');
+        document.body.removeAttribute('style')
+        let backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+          backdrop.parentNode.removeChild(backdrop);
+        }
+      }, 500); // Adjust the timing if needed
     }
+  };
 
-    let tolerance = 0.03
+  useEffect(() => {
+    // Load modal window directly
+    showModal()
+    let submitBtn = document.querySelector('#submitBtn')
+    submitBtn.addEventListener('click', submitRecord)
+  }, [])
 
-    let res = false
-
-    let [solX, solY] = solution[val]
-
-    if (Math.abs(xCoord - solX) <= tolerance && Math.abs(yCoord - solY) <= tolerance)
-      res = true
-
-    if (res) {
-      // alert('You found it', val)
-      setCharacters(characters.filter(v => v != val))
-      setFoundCircles(prev => [...prev, [val, xCoord, yCoord]])
-    }
-
-    setShowSelection(false)
-
+  const submitRecord = () => {
+    console.log("submitted")
+    hideModal()
+    setShowPage('home')
   }
 
-
   return (
-    <div className='d-flex flex-column position-fixed bg-dark p-1 rounded' style={{ left: mousePageX, top: mousePageY }}>
-      {characters.map(val =>
-        <button key={val} type="button" className="btn btn-secondary m-0 p-0 py-1" onClick={(e) => submit(e, val)}>
-          <img src={`/odin-wheres-waldo-FE/chr0${val}.png`} alt="" className="w-75 rounded" />
-        </button>
-      )}
+    <div>
+      {/* <!-- Modal --> */}
+      <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">Game Ended</h1>
+            </div>
+            <div className="modal-body">
+
+              <h3>
+                Your record :
+                <span>{Math.floor(time / 60).toString().padStart(2, '0')}</span>
+                <span>:</span>
+                <span>{(time % 60).toFixed(0).padStart(2, '0')}</span>
+              </h3>
+
+              <div className="form-floating mb-3">
+                <input type="text" className="form-control" id="username" name="username" />
+                <label htmlFor="username">Username</label>
+              </div>
+
+
+            </div>
+
+            <div className="modal-footer">
+              <button type="button" id="submitBtn" className="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
 
-export default Selection
+export default EndPage

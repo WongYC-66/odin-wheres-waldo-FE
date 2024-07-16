@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import Selection from './Selection.jsx'
+import EndPage from './EndPage.jsx'
 
 import game01Img from '/game01.jpg?url'
 import chr01Img from '/chr01.png?url'
@@ -11,7 +12,8 @@ import chr99Img from '/chr99.png?url'
 
 function Game({ setShowPage }) {
 
-  const [characters, setCharacters] = useState([1, 2, 3, 4])
+  // const [characters, setCharacters] = useState([1, 2, 3, 4])
+  const [characters, setCharacters] = useState([1])
   const [showSelection, setShowSelection] = useState(false)
   const [selectionProp, setSelectionProp] = useState({
     mouseX: 0,
@@ -120,6 +122,9 @@ function Game({ setShowPage }) {
           </div>
         )
       })}
+
+      {/* EndPage and query username */}
+      {characters.length === 0 && <EndPage time={time} setShowPage={setShowPage}/>}
 
     </div >
   )

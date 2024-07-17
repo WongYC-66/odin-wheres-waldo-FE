@@ -1,11 +1,8 @@
-// import chr01Img from '/chr01.png?url'
-// import chr02Img from '/chr02.png?url'
-// import chr03Img from '/chr03.png?url'
-// import chr04Img from '/chr04.png?url'
+import { API_URL } from './api_url.js'
 
 function Selection(props) {
 
-  let { mouseX, mouseY, imgWidth, imgHeight, mousePageX, mousePageY} = props.selectionProp
+  let { mouseX, mouseY, imgWidth, imgHeight, mousePageX, mousePageY } = props.selectionProp
 
   let characters = props.characters
   let setCharacters = props.setCharacters
@@ -14,26 +11,12 @@ function Selection(props) {
 
   // console.log(props.selectionProp)
 
-  const submit = (e, val) => {
+  const submit = async (e, val) => {
     // call BackEnd to check
     let xCoord = mouseX / imgWidth
     let yCoord = mouseY / imgHeight
 
-    let solution = {
-      1: [0.488, 0.713],
-      2: [0.853, 0.670],
-      3: [0.274, 0.600],
-      4: [0.135, 0.677],
-    }
-
-    let tolerance = 0.03
-
-    let res = false
-
-    let [solX, solY] = solution[val]
-
-    if (Math.abs(xCoord - solX) <= tolerance && Math.abs(yCoord - solY) <= tolerance)
-      res = true
+    let res = await fetchRes(val, xCoord, yCoord)
 
     if (res) {
       // alert('You found it', val)
@@ -43,6 +26,24 @@ function Selection(props) {
 
     setShowSelection(false)
 
+  }
+
+  const fetchRes = async (val, x, y) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const response = await fetch(`${API_URL}/v1/success_guess_post`, {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({ val, x, y }),
+    });
+
+    let data = await response.json()
+    console.log(data)
+    if (data && data.res)
+      return data.res
+
+    return false
   }
 
 

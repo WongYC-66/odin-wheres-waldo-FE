@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { API_URL } from './api_url.js'
 
 function EndPage(props) {
 
@@ -40,8 +41,25 @@ function EndPage(props) {
 
   const submitRecord = () => {
     console.log("submitted")
+    updateBE()
     hideModal()
     setShowPage('home')
+  }
+
+  const updateBE = async (val, x, y) => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    let username = document.querySelector('#username').value
+
+    const response = await fetch(`${API_URL}/v1/score_board_post`, {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify({ username, time, }),
+    });
+
+    let data = await response.json()
+    console.log(data)
   }
 
   return (

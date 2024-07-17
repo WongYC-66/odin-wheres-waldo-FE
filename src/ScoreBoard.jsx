@@ -1,0 +1,52 @@
+import { useEffect, useState } from "react"
+import { API_URL } from './api_url.js'
+
+function ScoreBoard(props) {
+  let setShowPage = props.setShowPage
+  const [userList, setUserList] = useState([])
+
+  useEffect(() => {
+    const fetchUserList = async () => {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const response = await fetch(`${API_URL}/v1/score_board_get`, {
+        method: "GET",
+        headers: myHeaders,
+      });
+
+      let data = await response.json()
+      // console.log(data)
+      if (data && data.users) {
+        setUserList(data.users)
+      }
+      return
+    }
+
+    fetchUserList()
+
+  }, [])
+
+  const backButtonClick = () => {
+    setShowPage('home')
+  }
+
+  return (
+    <div className='d-flex flex-column justify-content-center align-items-center mt-5'>
+      <h1 className="fs-1">LeaderBoard</h1>
+
+      <button type="button" className="btn btn-primary" onClick={backButtonClick}>Back</button>
+
+      <hr className="border border-danger border-2 opacity-50 w-50" />
+
+      {/* list of username and time */}
+      {userList.map(({ _id, name, time }) =>
+        <div key={_id}>
+          {name} {time}
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default ScoreBoard

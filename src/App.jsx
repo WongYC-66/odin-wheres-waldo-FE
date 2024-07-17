@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Home from './Home.jsx'
 import Game from './Game.jsx'
+import ScoreBoard from './ScoreBoard.jsx'
 // import './App.css'
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <main className='flex-fill'>
         {showPage == 'home' && <Home setShowPage={setShowPage} />}
         {showPage == 'game' && <Game setShowPage={setShowPage} />}
+        {showPage == 'score' && <ScoreBoard setShowPage={setShowPage} />}
       </main>
 
       <footer className='text-center p-2 m-0'>

@@ -5,6 +5,9 @@ function Home({setShowPage}) {
   const playButtonClick = () => {
     setShowPage('game')
   }
+  const scoreButtonClick = () => {
+    setShowPage('score')
+  }
 
   return (
     <div className='d-flex flex-column justify-content-center align-items-center mt-5'>
@@ -13,6 +16,10 @@ function Home({setShowPage}) {
       <h5>Try to find waldo, wizard and odlaw as soon as possible</h5>
 
       <button type="button" className="btn btn-danger" onClick={playButtonClick}>Play Now</button>
+
+      <hr />
+      <button type="button" className="btn btn-success" onClick={scoreButtonClick}> Scoreboard </button>
+
     </div>
   )
 }

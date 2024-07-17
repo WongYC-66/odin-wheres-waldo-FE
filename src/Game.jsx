@@ -13,7 +13,6 @@ import chr99Img from '/chr99.png?url'
 function Game({ setShowPage }) {
 
   const [characters, setCharacters] = useState([1, 2, 3, 4])
-  // const [characters, setCharacters] = useState([1])
   const [showSelection, setShowSelection] = useState(false)
   const [selectionProp, setSelectionProp] = useState({
     mouseX: 0,

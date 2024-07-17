@@ -40,11 +40,28 @@ function ScoreBoard(props) {
       <hr className="border border-danger border-2 opacity-50 w-50" />
 
       {/* list of username and time */}
-      {userList.map(({ _id, name, time }) =>
-        <div key={_id}>
-          {name} {time}
-        </div>
-      )}
+      <table className="table table-danger table-hover table-borderless mx-5 w-50">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">name</th>
+            <th scope="col">time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {userList.map(({ _id, name, time }, i) =>
+            <tr key={_id}>
+              <th>{i + 1}</th>
+              <td>{name}</td>
+              <td>
+                <span>{Math.floor(time / 60).toString().padStart(2, '0')}</span>
+                <span>:</span>
+                <span>{(time % 60).toFixed(0).padStart(2, '0')}</span>
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   )
 }

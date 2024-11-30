@@ -6,7 +6,7 @@ A simple game of  photo tagging app. Like Where's Waldo, user is given a large i
 ## Live demo
 
 - FE : https://wongyc-66.github.io/odin-wheres-waldo-FE/
-- Back end : https://odin-wheres-waldo-be.adaptable.app/
+- Back end : https://odin-wheres-waldo-be.onrender.com/
 
 
 ## Tech-stack
